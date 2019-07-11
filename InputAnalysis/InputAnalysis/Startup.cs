@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -18,6 +19,28 @@ namespace InputAnalysis
     {
         public Startup(IConfiguration configuration)
         {
+
+            var service = new Services.InputAnalysisService();
+
+            var storedText = File.ReadAllText("InputFile/Input.txt");
+
+            (var doubleRes, var stringRes) = service.ProcessInput(storedText);
+
+            Console.WriteLine($"Sum: {doubleRes.Sum()}" );
+            Console.WriteLine($"Average: {doubleRes.Average()}");
+            Console.WriteLine($"Median: {doubleRes.OrderBy(x => x).ElementAt(doubleRes.Count/2)}");
+            Console.WriteLine($"_______________");
+            Console.WriteLine($"{doubleRes.Count/(doubleRes.Count + stringRes.Count)}% of values were numbers");
+            Console.WriteLine($"_______________");
+            Console.WriteLine($"Distinct, reverse alphabetized list:");
+            
+            //using a looping writeLine here for cleanliness of output
+            foreach(var s in stringRes.Distinct().OrderByDescending(x => x))
+            {
+                Console.WriteLine(s);
+            }
+
+
             Configuration = configuration;
         }
 
