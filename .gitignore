@@ -5,3 +5,9 @@
 /InputAnalysis/.vs/InputAnalysis
 /InputAnalysis/InputAnalysis/bin/Debug/netcoreapp2.1
 /InputAnalysis/InputAnalysis/obj
+/.vs
+/FileScanner/FileScanner/.vs/FileScanner
+/FileScanner/FileScanner/FileScanner/bin/Debug/netcoreapp2.2
+/FileScanner/FileScanner/FileScanner/obj
+/InputAnalysis/InputAnalysisTests/bin/Debug/netcoreapp2.2
+/InputAnalysis/InputAnalysisTests/obj

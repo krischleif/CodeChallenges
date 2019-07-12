@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using InputAnalysis.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace InputAnalysis.Controllers
 {
@@ -10,36 +9,59 @@ namespace InputAnalysis.Controllers
     [ApiController]
     public class InputAnalysisController : ControllerBase
     {
-        // GET api/values
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        private readonly IInputAnalysisService inputAnalysisService;
+
+        public InputAnalysisController(IInputAnalysisService inputAnalysisService)
         {
-            return new string[] { "value1", "value2" };
+            this.inputAnalysisService = inputAnalysisService;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+
+        // GET
+        [HttpGet("GetSumOfAllNumbers")]
+        public ActionResult<double> GetSumOfAllNumbers()
         {
-            return "value";
+            return Ok(inputAnalysisService.GetSumOfAllNumbers());
         }
 
-        // POST api/values
-        [HttpPost]
-        public void Post([FromBody] string value)
+        // GET
+        [HttpGet("GetCountOfAllNumbers")]
+        public ActionResult<int> GetCountOfAllNumbers()
         {
+            return Ok(inputAnalysisService.GetCountOfAllNumbers());
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // POST
+        // Param: contains
+        [HttpPost("ContainsString")]
+        public ActionResult<bool> ContainsString(string contains)
         {
+            if (string.IsNullOrEmpty(contains))
+            {
+                return BadRequest();
+            }
+
+            return Ok(inputAnalysisService.ContainsString(contains));
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // POST
+        // Param: contains
+        [HttpPost("ContainsSubString")]
+        public ActionResult<bool> ContainsSubString(string contains)
         {
+            if (string.IsNullOrEmpty(contains))
+            {
+                return BadRequest();
+            }
+
+            return Ok(inputAnalysisService.ContainsSubString(contains));
+        }
+
+        // GET
+        [HttpGet("GetFullProcessedData")]
+        public ActionResult<(List<double> intList, List<string> stringList)> GetFullProcessedData()
+        {
+            return Ok(inputAnalysisService.GetFullProcessedData());
         }
     }
 }
